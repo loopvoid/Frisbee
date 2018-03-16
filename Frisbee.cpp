@@ -1,5 +1,5 @@
 #include"Frisbee.h"
-#include<math.h>
+#include<cmath>
 #include<iostream>
 #include<fstream>
 #include<string>
@@ -14,12 +14,9 @@ const double Frisbee::CLA = 1.4;
 const double Frisbee::CD0 = 0.08;
 const double Frisbee::CDA = 2.72;
 const double Frisbee::ALPHA0 = -4;
-double Frisbee::vx = 0;
-double Frisbee::vy = 0;
-double Frisbee::x = 0;
-double Frisbee::y = 0;
 
-void Frisbee::simulate(double y0, double vx0, double vy0, double alpha, double deltaT)
+void Frisbee::simulate(double y0, double vx0, double vy0,
+	double alpha, double deltaT)
 {
 	//Calculation of the lift coefficient using the relationship given
 	//by S. A. Hummel.
@@ -44,7 +41,7 @@ void Frisbee::simulate(double y0, double vx0, double vy0, double alpha, double d
 		fout.open("frisbee.csv", ios_base::app);
 		if (!fout.is_open())
 		{
-			throw "文件打开失败!";
+			throw "File can't open!";
 		}
 
 		//A loop index to monitor the simulation steps.
@@ -72,8 +69,7 @@ void Frisbee::simulate(double y0, double vx0, double vy0, double alpha, double d
 				//pw.print(x + "," + y + "," + vx);
 				fout << x << "," << y << "," << vx;
 				//pw.println();
-				//fout << "\r\n";
-				fout << "\n";
+				fout << "\r\n";
 				fout.flush();
 			}
 			k++;
@@ -83,11 +79,4 @@ void Frisbee::simulate(double y0, double vx0, double vy0, double alpha, double d
 	catch (string s){
 		cout << s + "Error, file frisbee.csv is in use.";
 	}
-}
-
-int main()
-{
-	Frisbee::simulate(1, 16.5, 0, 6, 0.001);
-
-	return 0;
 }
